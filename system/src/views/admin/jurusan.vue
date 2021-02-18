@@ -10,12 +10,14 @@
               <tr>
                 <th class="text-left">No</th>
                 <th class="text-left">Nama</th>
+                <th class="text-left">Mata Pelajaran</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(mata ,index) in matas" :key="mata.id">
-                <td>{{ index+1 }}</td>
-                <td>{{ mata.name}}</td>
+              <tr v-for="(jurusan, index) in jurusans" :key="jurusan.id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ jurusan.name}}</td>
+                <td>{{ jurusan.matPel.name }}</td>
               </tr>
             </tbody>
           </template>
@@ -28,27 +30,27 @@
 </template>
 
 <script>
-import navbar from "../../components/admin/navbar";
+import navbar from "../../components/admin/navbar.vue";
 import axios from "axios";
 export default {
-  components: {
-    navbar
-  },
+  components: { navbar },
   data() {
     return {
-      matas: []
+      jurusans: []
+      // nama: "",
+      // idMataPelajaran: ""
     };
   },
   created: function() {
-    this.getMatas();
+    this.getJurusans();
   },
   methods: {
-    getMatas: function() {
+    getJurusans: function() {
       axios
-        .get("http://192.168.1.33:8080/sekolah/matpel")
+        .get("http://192.168.1.33:8080/sekolah/jurusan")
         .then(res => {
-          this.matas = res.data;
-          console.log(this.matas);
+          this.jurusans = res.data;
+          console.log(this.jurusans);
         })
         .catch(err => {
           // handle error

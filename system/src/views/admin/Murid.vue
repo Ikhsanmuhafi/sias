@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar/>
+    <navbar />
     <v-container>
       <v-card :elevation="6">
         <v-card-title>Murid</v-card-title>
@@ -25,15 +25,15 @@
           </template>
         </v-simple-table>
 
-        <v-card-action></v-card-action>
+        <!-- <v-card-action></v-card-action> -->
       </v-card>
     </v-container>
   </div>
 </template>
 <script>
-import navbar from "../../components/admin/navbar"
+import navbar from "../../components/admin/navbar";
 export default {
-  components:{
+  components: {
     navbar
   }
 };

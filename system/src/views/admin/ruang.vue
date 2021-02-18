@@ -9,13 +9,13 @@
             <thead>
               <tr>
                 <th class="text-left">No</th>
-                <th class="text-left">Nama</th>
+                <th class="text-left">Nama Ruang</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(mata ,index) in matas" :key="mata.id">
-                <td>{{ index+1 }}</td>
-                <td>{{ mata.name}}</td>
+              <tr v-for="(ruang, index) in ruangs" :key="ruang.id">
+                <td>{{ index + 1 }}</td>
+                <td>{{ ruang.name }}</td>
               </tr>
             </tbody>
           </template>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import navbar from "../../components/admin/navbar";
+import navbar from "../../components/admin/navbar.vue";
 import axios from "axios";
 export default {
   components: {
@@ -36,19 +36,19 @@ export default {
   },
   data() {
     return {
-      matas: []
+      ruangs: []
     };
   },
   created: function() {
-    this.getMatas();
+    this.getRuangs();
   },
   methods: {
-    getMatas: function() {
+    getRuangs: function() {
       axios
-        .get("http://192.168.1.33:8080/sekolah/matpel")
+        .get("http://192.168.1.33:8080/sekolah/ruang")
         .then(res => {
-          this.matas = res.data;
-          console.log(this.matas);
+          this.ruangs = res.data;
+          console.log(this.ruangs);
         })
         .catch(err => {
           // handle error

@@ -29,26 +29,26 @@
         </v-toolbar-title>
       </v-container>
       <v-spacer></v-spacer>
-        <v-menu open-on-hover offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="grey darken-2" dark v-bind="attrs" outlined fab x-small v-on="on">
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </template>
+      <v-menu open-on-hover offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="grey darken-2" dark v-bind="attrs" outlined fab x-small v-on="on">
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </template>
 
-          <v-list>
-            <v-list-item to="/profiladmin">
-              <v-list-item-title
-                ><v-icon>mdi-account</v-icon>Profil</v-list-item-title
-              >
-            </v-list-item>
-            <v-list-item @click="handleLogout">
-              <v-list-item-title
-                ><v-icon>mdi-logout</v-icon>Logout</v-list-item-title
-              >
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <v-list>
+          <v-list-item to="/profiladmin">
+            <v-list-item-title>
+              <v-icon>mdi-account</v-icon>Profil
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="handleLogout">
+            <v-list-item-title>
+              <v-icon>mdi-logout</v-icon>Logout
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
   </nav>
 </template>
@@ -62,11 +62,17 @@ export default {
       selectedItem: 1,
       items: [
         // { title: "Profil", icon: "mdi-account", route: "/murid" },
-        {title: "Jadwal", icon: "mdi-book", route: "/admin"},
+        // {title: "Jadwal", icon: "mdi-book", route: "/admin"},
         { title: "Murid", icon: "mdi-account-group", route: "/daftarmurid" },
         { title: "Guru", icon: "mdi-account-group", route: "/daftarguru" },
         { title: "Kelas", icon: "mdi-account-group", route: "/daftarkelas" },
-        { title: "Materi Pelajaran", icon: "mdi-book", route: "/matapelajaran" }
+        {
+          title: "Materi Pelajaran",
+          icon: "mdi-book",
+          route: "/matapelajaran"
+        },
+        { title: "Jurusan", icon: "mdi-book", route: "/jurusan" },
+        { title: "Ruang", icon: "mdi-book", route: "/ruang" }
       ]
     };
   },
