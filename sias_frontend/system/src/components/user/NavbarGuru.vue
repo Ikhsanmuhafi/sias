@@ -25,12 +25,41 @@
 
     <v-app-bar app>
       <v-container>
-      <v-toolbar-title class="justify-center">
-        <strong>Sistem Informasi academy Sekolah</strong>
-      </v-toolbar-title>
+        <v-toolbar-title class="justify-center">
+          <strong>Sistem Informasi academy Sekolah</strong>
+        </v-toolbar-title>
       </v-container>
       <v-spacer></v-spacer>
-      <v-btn rounded text color="red" @click="handleLogout"> Logout </v-btn>
+      <template>
+        <v-menu open-on-hover offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="grey darken-2"
+              dark
+              v-bind="attrs"
+              outlined
+              fab
+              x-small
+              v-on="on"
+            >
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item to="/guru">
+              <v-list-item-title
+                ><v-icon>mdi-account</v-icon>Profil</v-list-item-title
+              >
+            </v-list-item>
+            <v-list-item @click="handleLogout">
+              <v-list-item-title
+                ><v-icon>mdi-logout</v-icon>Logout</v-list-item-title
+              >
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </template>
     </v-app-bar>
   </nav>
 </template>
@@ -43,10 +72,10 @@ export default {
       drawer: false,
       selectedItem: 1,
       items: [
-        { title: "Profil", icon: "mdi-account", route: "/guru" },
+        // { title: "Profil", icon: "mdi-account", route: "/guru" },
         { title: "Jadwal", icon: "mdi-book", route: "/jadwalguru" },
         { title: "Kelas", icon: "mdi-door", route: "/kelasguru" },
-        {title: "Materi", icon: "mdi-book", route: "/materi"}
+        { title: "Materi", icon: "mdi-book", route: "/materi" },
       ],
     };
   },
