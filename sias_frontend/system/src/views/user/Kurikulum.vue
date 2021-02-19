@@ -12,35 +12,27 @@
                   <v-expansion-panel-header>Biologi</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
-              <br />
               <v-expansion-panels popout>
                 <v-expansion-panel v-for="(item, i) in 1" :key="i">
                   <v-expansion-panel-header>Kimia</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
-              <br />
               <v-expansion-panels popout>
                 <v-expansion-panel v-for="(item, i) in 1" :key="i">
                   <v-expansion-panel-header>Fisika</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
@@ -57,35 +49,27 @@
                   <v-expansion-panel-header>Sejarah</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
-              <br />
               <v-expansion-panels popout>
                 <v-expansion-panel v-for="(item, i) in 1" :key="i">
                   <v-expansion-panel-header>Geografi</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
-              <br />
               <v-expansion-panels popout>
                 <v-expansion-panel v-for="(item, i) in 1" :key="i">
                   <v-expansion-panel-header>Ekonomi</v-expansion-panel-header>
                   <v-expansion-panel-content>
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
-                    <br />
                     <p>isi</p>
                   </v-expansion-panel-content>
                 </v-expansion-panel>

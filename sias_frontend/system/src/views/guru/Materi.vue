@@ -217,8 +217,8 @@ export default {
     tambahMateri() {
       axios
       .post("http://192.168.1.33:8080/sekolah/kurikulum/add",{
-        name: this.names,
-        id_materi: parseInt(this.materis)
+        id_matpel:parseInt(this.names),
+        id_materi:parseInt(this.materis)
       })
       // axios
       //   .post("http://192.168.1.33:8080/sekolah/materi/add", {
@@ -232,7 +232,7 @@ export default {
             .then((response) => this.setMateri(response.data))
             .catch((error) => console.log(error));
 
-          this.names = "";
+          this.names = parseInt();
           this.materis = parseInt();
           this.dialog = false;
           console.log(res);
