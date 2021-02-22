@@ -2,7 +2,7 @@
   <div class="ProfilMurid">
     <Navbar />
     <v-container>
-      <v-card class="mx-auto" max-width="500">
+      <v-card class="mx-auto" max-width="344">
         <v-img
           src="https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_960_720.png"
           height="200px"
@@ -26,58 +26,43 @@
             <v-card-text>
               <strong>Username</strong>
               <v-divider></v-divider>
-              {{ user.username }}</v-card-text
-            >
-            <v-card-text>
-              <strong>Kelas</strong>
-              <v-divider></v-divider>
-              {{ biodata.kelas.kode_kelas }}</v-card-text
-            >
-            <v-card-text>
+              {{ user.username }}</v-card-text>
+                <v-card-text>
               <strong>Alamat</strong>
               <v-divider></v-divider>
-              {{ biodata.alamat }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.alamat }}</v-card-text>
+              <v-card-text>
               <strong>Email</strong>
               <v-divider></v-divider>
-              {{ biodata.email }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.email }}</v-card-text>
+                            <v-card-text>
               <strong>Jenis Kelaminmu</strong>
               <v-divider></v-divider>
-              {{ biodata.gender }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.gender }}</v-card-text>
+              <v-card-text>
               <strong>Jurusan</strong>
               <v-divider></v-divider>
-              {{ biodata.jurusan }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.jurusan }}</v-card-text>
+                            <v-card-text>
               <strong>Nama</strong>
               <v-divider></v-divider>
-              {{ biodata.name }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.name }}</v-card-text>
+              <v-card-text>
               <strong>Nilai</strong>
               <v-divider></v-divider>
-              {{ biodata.nilai }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.nilai }}</v-card-text>
+                            <v-card-text>
               <strong>No Identitas</strong>
               <v-divider></v-divider>
-              {{ biodata.no_identitas }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.no_identitas }}</v-card-text>
+              <v-card-text>
               <strong>No Telephone</strong>
               <v-divider></v-divider>
-              {{ biodata.no_telp }}</v-card-text
-            >
-            <v-card-text>
+              {{ biodata.no_telp }}</v-card-text>
+                            <v-card-text>
               <strong>Pendidikan Perakhir</strong>
               <v-divider></v-divider>
-              {{ biodata.pendidikan_terakhir }}</v-card-text
-            >
+              {{ biodata.pendidikan_terakhir }}</v-card-text>
           </div>
         </v-expand-transition>
       </v-card>
@@ -97,7 +82,6 @@ export default {
       show: false,
       user: {},
       biodata: {},
-      // kelas: {},
     };
   },
   methods: {
@@ -117,25 +101,9 @@ export default {
         .then((response) => this.setBiodata(response.data))
         .catch((error) => console.log(error));
     },
-    // getKelas() {
-    //   axios
-    //     .get(
-    //       `http://192.168.1.33:8080/sekolah/kelas/${this.kelas.id_kelas}`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //         },
-    //       }
-    //     )
-    //     .then((response) => this.setKelas(response.data))
-    //     .catch((error) => console.log(error));
-    // },
     setBiodata(data) {
       this.biodata = data;
     },
-    // setKelas(data) {
-    //   this.kelas = data;
-    // },
   },
   mounted() {
     axios
@@ -147,7 +115,6 @@ export default {
       .then((response) => {
         this.setuser(response.data);
         this.getBiodata();
-        // this.getKelas();
       })
       .catch((error) => console.log(error));
   },
