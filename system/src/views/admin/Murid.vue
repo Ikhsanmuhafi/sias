@@ -147,4 +147,7 @@ export default {
 </script>
 
 <style>
+#btnAdd {
+  margin-left: 518px;
+}
 </style>
