@@ -4,10 +4,15 @@
       <v-row justify="center">
         <v-layout style="margin-top: 50px">
           <v-flex>
-            <v-card max-width="400" :elevation="6" class="mx-auto my-12">
-              <v-col md="12">
+            <v-card max-width="400" :elevation="6" class="mx-auto my-15">
+              <v-col md="15">
                 <v-card-title class="justify-center">
-                  <p>Sistem Academy Sekolah</p>
+                  <h3>Sistem Academy Sekolah</h3>
+                  <v-form ref="form">
+                    <v-alert dense dismissible color="error" type="error" :value="error">
+                      NIS/NIK password tidak sesuai!
+                    </v-alert>
+                  </v-form>
                 </v-card-title>
                 <v-row justify="center">
                   <v-col md="12">
@@ -16,6 +21,7 @@
                       single-line
                       outlined
                       v-model="username"
+                      :rules="nameRules"
                     ></v-text-field>
                     <v-text-field
                       label="Password"
@@ -25,6 +31,7 @@
                       single-line
                       outlined
                       @click:append="show1 = !show1"
+                      :rules="pasRules"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -70,8 +77,11 @@ export default {
     return {
       username: "",
       data: "",
-      show1: false,
       password: "",
+      show1: false,
+      error: false,
+      nameRules: [(value) => value != "" ||""],
+      pasRules: [(value) => value != "" ||""],
       rules: {
         required: (value) => !!value || "Required.",
       },
@@ -87,9 +97,9 @@ export default {
         this.data = res.data;
         localStorage.setItem("token", this.data.accessToken);
         await this.info(this.data.accessToken);
-        // this.$router.push("/jadwal");
         console.log(this.data);
       } catch (error) {
+        this.error = true;
         console.log(error);
       }
     },
@@ -104,13 +114,28 @@ export default {
         for (let i of role) {
           console.log(i);
           if (i.authority === "ROLE_ADMIN") {
-            alert('Login admin success!')
+            this.$toast.success("Login admin success!", {
+              type: "success",
+              position: "top",
+              duration: 1000,
+              dismissible: true,
+            });
             this.$router.push("/profiladmin");
           } else if (i.authority === "ROLE_MURID") {
-            alert('Login siswa success!')
+            this.$toast.success("Login siswa success!", {
+              type: "success",
+              position: "top",
+              duration: 1000,
+              dismissible: true,
+            });
             this.$router.push("/profilmurid");
           } else if (i.authority === "ROLE_GURU") {
-            alert('Login guru berhasil')
+            this.$toast.success("Login guru berhasil", {
+              type: "success",
+              position: "top",
+              duration: 1000,
+              dismissible: true,
+            });
             this.$router.push("/guru");
           }
         }

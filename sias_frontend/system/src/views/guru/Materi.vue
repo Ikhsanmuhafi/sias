@@ -2,32 +2,39 @@
   <div class="Jadwal">
     <NavbarGuru />
     <v-container>
+      <!-- Tambah Materi -->
       <v-card max-width="800" :elevation="6" class="mx-auto my-12">
         <v-col md="12">
           <v-card-title>
             Materi
             <v-spacer></v-spacer>
             <v-row justify="center">
-              <v-dialog v-model="dialog" persistent max-width="600px" class="mx-auto my-12">
+              <v-dialog
+                v-model="dialog"
+                transition="dialog-top-transition"
+                max-width="600px"
+                class="mx-auto my-12"
+              >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn color="green" dark small v-bind="attrs" v-on="on">
                     Tambah
                   </v-btn>
                 </template>
-                <v-card >
+                <v-card>
                   <v-card-title>
                     <span class="headline">Tambah Materi</span>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
                       <v-row>
-                        <v-col >
+                        <v-col>
                           <v-select
                             v-model="names"
                             label="Mata Pelajaran"
                             :items="matpel"
                             item-value="id"
                             item-text="name"
+                            :rules="matpela"
                           >
                           </v-select>
                           <!-- <v-select
@@ -39,17 +46,18 @@
 
                             required
                           ></v-select> -->
-                          
-                            <v-textarea
+
+                          <v-textarea
                             outlined
                             label="Materi"
-                             v-model="materis"
-                             required
-                             >
-                            </v-textarea>
-                          </v-col>
+                            v-model="materis"
+                            required
+                            :rules="materiku"
+                          >
+                          </v-textarea>
+                        </v-col>
 
-                          <!-- <v-text-field
+                        <!-- <v-text-field
                           label="Materi"
                           v-model="materis"
                           required
@@ -71,14 +79,18 @@
               </v-dialog>
             </v-row>
           </v-card-title>
-
+          <!-- // -->
+          <!-- Edit Materi -->
+            
+          <!-- // -->
           <v-simple-table>
             <template v-slot:default>
               <thead>
                 <tr>
-                  <th class="text-center">No</th>
-                  <th class="text-center">Mata Pelajaran</th>
-                  <th class="text-center">Materi</th>
+                  <th class="text-left">No</th>
+                  <th class="text-left">Mata Pelajaran</th>
+                  <th class="text-left">Materi</th>
+                  <th class="text-left"></th>
                 </tr>
               </thead>
               <tbody>
@@ -86,11 +98,13 @@
                   v-for="(kurikulum, index) in kurikulums"
                   :key="kurikulum.id"
                 >
-                  <td class="text-center">{{ index + 1 }}</td>
-                  <td class="text-center">{{ kurikulum.matPel.name }}</td>
-                  <td class="text-center">{{ kurikulum.materi }}</td>
+                  <td class="text-left">{{ index + 1 }}</td>
+                  <td class="text-left">{{ kurikulum.matPel.name }}</td>
+                  <td class="text-left">{{ kurikulum.materi }}</td>
                   <td>
-                    <v-btn small class="mx-1" dark color="blue"> Edit </v-btn>
+                    <v-btn type="submit" small class="mx-1" dark color="blue">
+                      Edit
+                    </v-btn>
                     <v-btn
                       type="submit"
                       small
@@ -124,13 +138,22 @@ export default {
   },
   data() {
     return {
+      dialogEdit: false,
+      editNames: "",
+      editMateris: "",
       dialog: false,
       kurikulums: [],
       pelajaran: "",
       names: "",
       materis: "",
       matpel: [],
-      materiku: [],
+      // materiku: [],
+        matpela: [
+            value => value != '' || ''
+        ],
+        materiku : [
+            value => value != '' || ''
+        ]
     };
   },
   methods: {
@@ -145,19 +168,17 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    //  getMateriku() {
-    //   axios
-    //     .get("http://192.168.1.33:8080/sekolah/materi")
-    //     .then((response) => {
-    //       this.materiku = response.data;
-    //     })
-    //     .catch((error) => console.log(error));
-    // },
     hapusMateri(id) {
       axios
         .delete("http://192.168.1.33:8080/sekolah/kurikulum/" + id)
         .then(() => {
           this.kurikulums.splice(id, 1);
+          this.$toast.error("Berhasil Dihapus", {
+            type: "error",
+            position: "top",
+            duration: 2000,
+            dismissible: true,
+          });
           console.log(this.kurikulums);
           //updet materi
           axios
@@ -172,12 +193,13 @@ export default {
           id_matpel: this.names,
           materi: this.materis,
         })
-        // axios
-        //   .post("http://192.168.1.33:8080/sekolah/materi/add", {
-        //     deskripsi: this.des,
-        //     id_matpel: parseInt(this.mapel),
-        //   })
         .then((res) => {
+          this.$toast.success("Berhasil DItambahkan", {
+            type: "success",
+            position: "top",
+            duration: 3000,
+            dismissible: true,
+          });
           //updet materi
           axios
             .get("http://192.168.1.33:8080/sekolah/kurikulum")
@@ -193,6 +215,28 @@ export default {
           console.log(err);
         });
     },
+    // getEdit: function () {
+    //     this.dialogEdit = true;
+    //     this.editNames = id_matpel;
+    //     this.editMateris = materi;
+    // },
+    // EditMateri: function () {
+    //   axios
+    //     .put(`http://192.168.1.33:8080/sekolah/kurikulum/${id}`, {
+    //       id_matpel: this.editNames,
+    //       materi: this.editMateris,
+    //     })
+    //     .then((response) => {
+    //       // handle success
+    //       this.kurikulums();
+    //       this.dialogEdit = false;
+    //     })
+    //     .catch((err) => {
+    //       // handle error
+    //       console.log(err);
+    //     });
+    //   // console.log(res);
+    // },
   },
   mounted() {
     axios
@@ -201,6 +245,7 @@ export default {
       .catch((error) => console.log(error));
 
     this.getPelajaran();
+    // this.EditMateri();
     // this.getMateriku();
   },
 };
@@ -208,5 +253,3 @@ export default {
 
 <style>
 </style>
-
- 
