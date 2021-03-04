@@ -21,14 +21,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in desserts" :key="item.name">
-                <td>{{ item.id }}</td>
-                <td>{{ item.tanggal }}</td>
-                <td>{{ item.hari }}</td>
-                <td>{{ item.matapelajaran }}</td>
-                <td>{{ item.jammulai }}</td>
-                <td>{{ item.jamselesai }}</td>
-                <td>{{ item.guru }}</td>
+              <tr>
+                <td>""</td>
+                <td>""</td>
+                <td>""</td>
+                <td>""</td>
+                <td>""</td>
+                <td>""</td>
+                <td>""</td>
               </tr>
               <v-divider></v-divider>
             </tbody>
@@ -49,35 +49,7 @@ export default {
   },
   data() {
     return {
-      desserts: [
-        {
-          id: 1,
-          tanggal: "27 Desember 2020",
-          hari: "Kamis",
-          matapelajaran: "Fisikawin",
-          jammulai: "08:00",
-          jamselesai: "15:00",
-          guru: "Nita Rosiana M.pdi"
-        },
-        {
-          id: 1,
-          tanggal: "27 Desember 2020",
-          hari: "Kamis",
-          matapelajaran: "Fisikawin",
-          jammulai: "08:00",
-          jamselesai: "15:00",
-          guru: "Nita Rosiana M.pdi"
-        },
-        {
-          id: 1,
-          tanggal: "27 Desember 2020",
-          hari: "Kamis",
-          matapelajaran: "Fisikawin",
-          jammulai: "08:00",
-          jamselesai: "15:00",
-          guru: "Nita Rosiana M.pdi"
-        }
-      ]
+    
     };
   }
 };

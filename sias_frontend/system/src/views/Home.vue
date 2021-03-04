@@ -7,7 +7,7 @@
             <v-card max-width="400" :elevation="6" class="mx-auto my-15">
               <v-col md="15">
                 <v-card-title class="justify-center">
-                  <h3>Sistem Academy Sekolah</h3>
+                <p>Sistem Infromasi Academy Sekolah</p>
                   <v-form ref="form">
                     <v-alert dense dismissible color="error" type="error" :value="error">
                       NIS/NIK password tidak sesuai!
@@ -45,11 +45,6 @@
                     @click="login"
                     >login</v-btn
                   >
-                  <!-- <p class="hem">ATAU</p>
-                <h3 id="lupa-password">
-                  <a href="/google" style="text-decoration: none"
-                    >Masuk Dengan Google</a>
-                  </h3>-->
                   <h4 id="lupa-password">
                     <a href="/lupapassword" style="text-decoration: none"
                       >Lupa Password?</a
@@ -68,11 +63,7 @@
 
 <script>
 import axios from "axios";
-// import Navbarr from "../components/Navbarr.vue"
 export default {
-  // components:{
-  //   // Navbarr
-  // },
   data() {
     return {
       username: "",

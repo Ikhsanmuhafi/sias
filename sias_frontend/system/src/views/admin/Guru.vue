@@ -11,15 +11,15 @@
                 <th class="text-left">No</th>
                 <th class="text-left">NIG</th>
                 <th class="text-left">Nama Guru</th>
-                <th class="text-left">Materi Pelajaran</th>
+                <!-- <th class="text-left">Materi Pelajaran</th> -->
               </tr>
             </thead>
             <tbody>
               <tr v-for="(guru, index) in gurus" :key="guru.id">
                 <td>{{index +1}}</td>
-                <td>{{guru.guruNik}}</td>
-                <td>{{guru.guruNama}}</td>
-                <td>{{guru.guruMataPelajaran}}</td>
+                <td>{{guru.user.username}}</td>
+                <td>{{guru.user.biodata ? guru.user.biodata.name :""}}</td>
+                <!-- <td>{{guru.guruMataPelajaran}}</td> -->
               </tr>
             </tbody>
           </template>
@@ -33,45 +33,33 @@
 
 <script>
 import navbar from "../../components/admin/navbar";
+import axios from "axios";
 export default {
   components: {
     navbar
   },
   data() {
     return {
-      gurus: [
-        {
-          guruNik: "1",
-          guruNama: "ANDI",
-          guruMataPelajaran: "MTK"
-        }
-      ]
-      // guruNo: "",
-      // dialogAdd: false,
-      // dialogEdit: false,
-      // dialogDelete: false,
-      // guruIdEdit: "",
-      // guruNikEdit: "",
-      // guruNamaEdit: "",
-      // guruMataPelajaranEdit: "",
-      // guruIdDelete: "",
-      // guruNikDelete: "",
-      // guruNamaDelete: ""
+      gurus: []
     };
-    // mounted () {
-    //   axios
-    //     .get("http://192.168.1.33:8080//kelas")
-    //     .then(response => this.setKelas(response.data))
-    //     .catch(error => console.log(error));
-    // };
-    // created:function () {
-    //   this.gs()
-    // },
-    //     methods: {
-    //       getGurus: function () {
-    // axios.get("")
-    //       }
-    //
+  },
+  created: function() {
+    this.getGurus();
+  },
+  methods: {
+    getGurus() {
+      axios
+        .get("http://192.168.1.33:8080/sekolah/guru")
+        .then(res => {
+          // console.log(res);
+          this.gurus = res.data;
+          console.log(this.gurus);
+        })
+        .catch(err => {
+          // handle error
+          console.log(err);
+        });
+    }
   }
 };
 </script>

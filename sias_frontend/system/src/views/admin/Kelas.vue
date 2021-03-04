@@ -9,10 +9,9 @@
             Kelas
             <!-- Modal tamabah kelas -->
             <template>
-              <v-spacer></v-spacer>
               <v-dialog v-model="dialogAdd" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="green" small dark v-bind="attrs" v-on="on">Add</v-btn>
+                  <v-btn id="btnAdd" color="primary" dark v-bind="attrs" v-on="on">Add</v-btn>
                 </template>
                 <v-card>
                   <v-card-title>
@@ -36,8 +35,8 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="red darken-1" dark text @click="dialogAdd=false">Close</v-btn>
-                    <v-btn color="blue darken-1" dark text @click="addKelas">Save</v-btn>
+                    <v-btn color="blue darken-1" @click="dialogAdd=false">Close</v-btn>
+                    <v-btn color="blue darken-1" @click="addKelas" text>Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -57,21 +56,11 @@
                 <tr v-for="(kelas, index) in kelass" :key="kelas.id">
                   <td>{{ index + 1 }}</td>
                   <td>{{ kelas.kode_kelas }}</td>
-                  <td>{{ kelas.biodata.name }}</td>
-                  <td>
-                    <v-btn small class="mx-1" dark color="blue"> Edit </v-btn>
-                    <v-btn type="submit" small color="red" dark class="mx-1" @click="btnHapus(kelas.id)">hapus</v-btn>
+                  <td>{{ kelas.biodata ? kelas.biodata.name : '-' }}</td>
+                  <td class="text-right">
+                    <v-btn class="btnEdit" @click="openEditDialog(kelas)">edit</v-btn>
+                    <v-btn id="btnHapus" @click="btnHapus(kelas.id)">hapus</v-btn>
                   </td>
-                                      <!-- <v-btn
-                      type="submit"
-                      small
-                      color="red"
-                      dark
-                      class="mx-1"
-                      @click="hapusMateri(kurikulum.id)"
-                    >
-                      Hapus
-                    </v-btn> -->
                 </tr>
                 <!-- <v-divider></v-divider> -->
               </tbody>
@@ -82,6 +71,44 @@
         </v-col>
       </v-card>
     </v-container>
+
+    <v-dialog v-model="dialogEdit" presistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Edit Kelas</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field label="Kode Kelas*" v-model="kelasYangMauDiedit.kode_kelas" required></v-text-field>
+              </v-col>
+              <v-col v-if="kelasYangMauDiedit.biodata" cols="12">
+                <v-text-field label="User" v-model="kelasYangMauDiedit.biodata.id" required></v-text-field>
+              </v-col>
+              <v-col v-else cols="12">
+                <v-text-field label="User" v-model="newBiodataID" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="jadwal" v-model="kelasYangMauDiedit.id_jadwal" required></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" @click="dialogEdit=false">Close</v-btn>
+          <!-- kelasYangMauDiedit.id, kelas itu adalah data dari backend yang di ambil oleh frontend  -->
+          <!-- didalam btnEdit itu endpoint/parameter yang diambil adalah id ,data -->
+          <v-btn
+            color="blue darken-1"
+            @click="btnEdit(kelasYangMauDiedit.id, kelasYangMauDiedit, newBiodataID)"
+            text
+          >Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -96,13 +123,19 @@ export default {
     return {
       kelass: [],
       dialogAdd: false,
+      dialogEdit: false,
+      kelasYangMauDiedit: {},
       kodeKelas: "",
       user: "",
-      jadwal: ""
+      jadwal: "",
+      newBiodataID: null
     };
   },
   created: function() {
     this.getKelass();
+  },
+  mounted() {
+    console.log(this.$refs.editDialog);
   },
   methods: {
     getKelass: function() {
@@ -147,22 +180,54 @@ export default {
       axios
         .get("http://192.168.1.33:8080/sekolah/kelas")
         .then(res => {
+          console.log(res);
           this.kelass = res.data;
         })
         .catch(err => {
           // handle error
           console.log(err);
         });
+    },
+    // edit adalah get data dan insert
+    // get data diambil didalam v-model menggunakan kelas.kode_kelas dan kelas.biodata
+    // biodataID dicek dulu ada atau tidaknya
+    btnEdit: function(id, data, biodataID) {
+      console.log(biodataID);
+      if (biodataID != null) data = { ...data, id_user: biodataID };
+      console.log(data);
+      axios
+        .put(`http://192.168.1.33:8080/sekolah/kelas/${id}`, data)
+        .then(res => {
+          console.log(res);
+          this.newBiodataID = null;
+        })
+        .finally(() => {
+          this.dialogEdit = false;
+          this.kelasYangMauDiedit = {};
+        });
+      // axios
+      // .get("http://192.168.1.33:8080/sekolah/kelas")
+      // .then(res => {
+      //   this.kelass = res.data;
+      // })
+      // .catch(err => {
+      //   // handle error
+      //   console.log(err);
+      // });
+    },
+    openEditDialog(kelas) {
+      this.kelasYangMauDiedit = kelas;
+      this.dialogEdit = true;
     }
   }
 };
 </script>
 
 <style>
-#btnHapus {
-  margin-left: 0px;
-}
 .btnEdit {
-  margin-left: 350px;
+  margin-right: 10px;
+}
+#btnAdd {
+  margin-left: 670px;
 }
 </style>
