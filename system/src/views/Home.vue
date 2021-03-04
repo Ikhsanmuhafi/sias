@@ -11,12 +11,7 @@
                 </v-card-title>
                 <v-row justify="center">
                   <v-col md="12">
-                    <v-text-field
-                      label="NIS/NIK"
-                      single-line
-                      outlined
-                      v-model="username"
-                    ></v-text-field>
+                    <v-text-field label="NIS/NIK" single-line outlined v-model="username"></v-text-field>
                     <v-text-field
                       label="Password"
                       v-model="password"
@@ -36,17 +31,14 @@
                     class="ma-2 white--text"
                     block
                     @click="login"
-                    >login</v-btn
-                  >
+                  >login</v-btn>
                   <!-- <p class="hem">ATAU</p>
                 <h3 id="lupa-password">
                   <a href="/google" style="text-decoration: none"
                     >Masuk Dengan Google</a>
                   </h3>-->
                   <h4 id="lupa-password">
-                    <a href="/lupapassword" style="text-decoration: none"
-                      >Lupa Password?</a
-                    >
+                    <a href="/lupapassword" style="text-decoration: none">Lupa Password?</a>
                   </h4>
                 </v-col>
               </v-col>
@@ -73,8 +65,8 @@ export default {
       show1: false,
       password: "",
       rules: {
-        required: (value) => !!value || "Required.",
-      },
+        required: value => !!value || "Required."
+      }
     };
   },
   methods: {
@@ -82,7 +74,7 @@ export default {
       try {
         const res = await axios.post("http://192.168.1.33:8080/sekolah/login", {
           username: this.username,
-          password: this.password,
+          password: this.password
         });
         this.data = res.data;
         localStorage.setItem("token", this.data.accessToken);
@@ -97,20 +89,20 @@ export default {
       try {
         const res = await axios.get("http://192.168.1.33:8080/sekolah/info", {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
         const role = res.data.authorities;
         for (let i of role) {
           console.log(i);
           if (i.authority === "ROLE_ADMIN") {
-            alert('Login admin success!')
+            // console.log('Login admin success!')
             this.$router.push("/profiladmin");
           } else if (i.authority === "ROLE_MURID") {
-            alert('Login siswa success!')
+            // console.log('Login siswa success!')
             this.$router.push("/profilmurid");
           } else if (i.authority === "ROLE_GURU") {
-            alert('Login guru berhasil')
+            // console.log('Login guru berhasil')
             this.$router.push("/guru");
           }
         }
@@ -120,8 +112,8 @@ export default {
         console.log(error);
         console.log(token);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
